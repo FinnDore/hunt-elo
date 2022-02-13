@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "hunt-elo": "apps/hunt-elo",
+    "hunt-elo-e2e": "apps/hunt-elo-e2e"
+  }
+}
