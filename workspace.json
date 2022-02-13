@@ -3,6 +3,7 @@
   "projects": {
     "hunt-elo": "apps/hunt-elo",
     "hunt-elo-e2e": "apps/hunt-elo-e2e",
+    "tauri-client": "apps/tauri-client",
     "utils": "libs/utils",
     "workspace": {
       "root": ".",
