@@ -21,7 +21,7 @@ export function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      hello World
+      hello World.
     </ThemeProvider>
   );
 }
