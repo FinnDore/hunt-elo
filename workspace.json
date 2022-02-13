@@ -2,6 +2,18 @@
   "version": 2,
   "projects": {
     "hunt-elo": "apps/hunt-elo",
-    "hunt-elo-e2e": "apps/hunt-elo-e2e"
+    "hunt-elo-e2e": "apps/hunt-elo-e2e",
+    "workspace": {
+      "root": ".",
+      "targets": {
+        "version": {
+          "executor": "@jscutlery/semver:version",
+          "options": {
+            "syncVersions": true,
+            "commitMessageFormat": "chore(${projectName}): release version ${version}"
+          }
+        }
+      }
+    }
   }
 }
