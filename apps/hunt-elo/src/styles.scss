@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+.container {
+    scroll-margin-top: 4rem;
+    width: calc(100vw - 4rem);
+    min-height: 100vh;
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+
+    & > * {
+        margin: 0.2rem auto !important;
+        width: 50%;
+        text-align: center;
+    }
+
+    .elo {
+        font-variant: small-caps;
+        font-size: 2rem;
+        b {
+            color: rgb(255, 72, 0);
+            margin-left: 1rem;
+        }
+    }
+}
+
+::selection {
+    background: #6504eb;
+}

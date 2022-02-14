@@ -14,8 +14,8 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@hunt-elo/utils": ["libs/utils/src/index.ts"],
-            "tslib": ["./node_modules/tslib/tslib.d.ts"]
+            "tslib": ["./node_modules/tslib/tslib.d.ts"],
+            "@hunt-elo/utils": ["./libs/utils/src/index.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"]
