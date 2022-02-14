@@ -53,9 +53,7 @@ async function getMmr(): Promise<string> {
     console.log(xmlDoc);
 
     const attrs = xmlDoc.children[0].children;
-    console.log(attrs.length);
-    let node: Element;
-    for (let i = 0; i < attrs.length; i++) {
+    for (let i = 0; i < attrs.length - 1; i++) {
         const attrName = attrs.item(i)?.attributes.getNamedItem('name');
         const name = attrs.item(i)?.attributes.getNamedItem('value');
         if (
@@ -72,7 +70,6 @@ async function getMmr(): Promise<string> {
                 }
             }
         }
-        console.log();
     }
     return '';
 }
