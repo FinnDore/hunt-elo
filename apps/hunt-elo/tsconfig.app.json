@@ -2,8 +2,8 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "outDir": "../../dist/out-tsc",
-        "moduleResolution": "node",
-        "types": ["node"]
+        "types": ["node"],
+        "moduleResolution": "node"
     },
     "files": [
         "../../node_modules/@nrwl/react/typings/cssmodule.d.ts",

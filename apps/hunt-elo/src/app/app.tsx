@@ -2,9 +2,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { dialog } from '@tauri-apps/api';
 import { readTextFile } from '@tauri-apps/api/fs';
 import { useState } from 'react';
-import { ThemeMode } from '../_enums/theme-mode';
 
-const themeMode = ThemeMode.dark;
 /**
  * The app component
  * @returns {object} the app component
@@ -12,9 +10,9 @@ const themeMode = ThemeMode.dark;
 export function App() {
     const theme = createTheme({
         palette: {
-            mode: themeMode,
+            mode: 'dark',
             primary: {
-                main: themeMode === ThemeMode.dark ? '#ffffff' : '#000000',
+                main: '#000000',
             },
             contrastThreshold: 3,
             tonalOffset: 0.2,

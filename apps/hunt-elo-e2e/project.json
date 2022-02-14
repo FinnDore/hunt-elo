@@ -1,28 +1,28 @@
 {
-  "root": "apps/hunt-elo-e2e",
-  "sourceRoot": "apps/hunt-elo-e2e/src",
-  "projectType": "application",
-  "targets": {
-    "e2e": {
-      "executor": "@nrwl/cypress:cypress",
-      "options": {
-        "cypressConfig": "apps/hunt-elo-e2e/cypress.json",
-        "devServerTarget": "hunt-elo:serve"
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "hunt-elo:serve:production"
+    "root": "apps/hunt-elo-e2e",
+    "sourceRoot": "apps/hunt-elo-e2e/src",
+    "projectType": "application",
+    "targets": {
+        "e2e": {
+            "executor": "@nrwl/cypress:cypress",
+            "options": {
+                "cypressConfig": "apps/hunt-elo-e2e/cypress.json",
+                "devServerTarget": "hunt-elo:serve"
+            },
+            "configurations": {
+                "production": {
+                    "devServerTarget": "hunt-elo:serve:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/hunt-elo-e2e/**/*.{js,ts}"]
+            }
         }
-      }
     },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/hunt-elo-e2e/**/*.{js,ts}"]
-      }
-    }
-  },
-  "tags": [],
-  "implicitDependencies": ["hunt-elo"]
+    "tags": [],
+    "implicitDependencies": ["hunt-elo"]
 }

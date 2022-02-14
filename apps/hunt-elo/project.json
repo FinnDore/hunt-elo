@@ -8,7 +8,7 @@
             "outputs": ["{options.outputPath}"],
             "defaultConfiguration": "production",
             "options": {
-                "compiler": "babel",
+                "compiler": "swc",
                 "outputPath": "dist/apps/hunt-elo",
                 "index": "apps/hunt-elo/src/index.html",
                 "baseHref": "/",
