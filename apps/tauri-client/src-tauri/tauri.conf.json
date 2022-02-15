@@ -56,6 +56,9 @@
             },
             "fs": {
                 "all": true
+            },
+            "dialog": {
+                "open": true
             }
         },
         "windows": [

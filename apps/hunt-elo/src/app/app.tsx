@@ -77,18 +77,15 @@ export function App() {
                         variant="outlined"
                         helperText="case sensitive"
                     />
-                    <Tooltip title="Set Custom path">
-                        <IconButton aria-label="settings" size="large">
-                            <SettingsIcon
-                                fontSize="inherit"
-                                onClick={async () =>
-                                    setPath(
-                                        (await getPath())[0] ?? DEFAULT_PATH
-                                    )
-                                }
-                            />
-                        </IconButton>
-                    </Tooltip>
+                    <IconButton
+                        aria-label="settings"
+                        size="large"
+                        onClick={async () =>
+                            setPath((await getPath())?.[0] ?? DEFAULT_PATH)
+                        }
+                    >
+                        <SettingsIcon fontSize="inherit" />
+                    </IconButton>
                 </div>
 
                 {elo !== null ? (
