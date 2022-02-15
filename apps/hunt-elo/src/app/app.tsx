@@ -1,11 +1,14 @@
+import SettingsIcon from '@mui/icons-material/Settings';
 import {
-    Button,
     createTheme,
     CssBaseline,
+    IconButton,
     TextField,
     ThemeProvider,
+    Tooltip,
 } from '@mui/material';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import classes from './app.module.scss';
 import { getElo } from './_functions/get-elo';
 import { getPath } from './_functions/get-path';
 
@@ -16,7 +19,10 @@ const theme = createTheme({
     palette: {
         mode: 'dark',
         primary: {
-            main: '#ffff',
+            main: '#ff4800',
+        },
+        secondary: {
+            main: '#00f2c4',
         },
         contrastThreshold: 3,
         tonalOffset: 0.1,
@@ -55,26 +61,36 @@ export function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <div className="container" data-tauri-drag-region="">
-                <Button
-                    variant="contained"
-                    onClick={async () =>
-                        setPath((await getPath())[0] ?? DEFAULT_PATH)
-                    }
-                >
-                    Set custom Path
-                </Button>
+            <div className={classes['container']} data-tauri-drag-region="">
+                <div className={classes['header']}>
+                    <Tooltip title="Set Custom path">
+                        <IconButton aria-label="settings" size="large">
+                            <SettingsIcon
+                                fontSize="inherit"
+                                onClick={async () =>
+                                    setPath(
+                                        (await getPath())[0] ?? DEFAULT_PATH
+                                    )
+                                }
+                            />
+                        </IconButton>
+                    </Tooltip>
+                </div>
+
                 <div>Enter your username ( case sensitive )</div>
                 <TextField
                     id="outlined-basic"
                     label="username"
-                    onChange={(e) => setUsername(e.target.value ?? '')}
+                    onChange={(e) => {
+                        setUsername(e.target.value ?? '');
+                    }}
                     variant="outlined"
                 />
                 {elo !== null ? (
-                    <div className="elo">
-                        elo:
-                        <b>{elo}</b>{' '}
+                    <div className={classes['elo']}>
+                        <Tooltip title="Your Elo">
+                            <b>{elo}</b>
+                        </Tooltip>
                     </div>
                 ) : (
                     <div>no user found</div>
