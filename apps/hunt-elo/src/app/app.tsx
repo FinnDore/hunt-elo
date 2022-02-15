@@ -5,7 +5,7 @@ import {
     TextField,
     ThemeProvider,
 } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getElo } from './_functions/get-elo';
 import { getPath } from './_functions/get-path';
 
@@ -36,6 +36,21 @@ export function App() {
         async () => setElo(await getElo(username, path ?? DEFAULT_PATH)),
         [username, path]
     );
+
+    const updateElo = useMemo(
+        () => async () => setElo(await getElo(username, path ?? DEFAULT_PATH)),
+        [username, path]
+    );
+
+    useEffect(() => {
+        window.addEventListener('focus', updateElo);
+        const timer = setInterval(updateElo, 5000);
+
+        return () => {
+            clearInterval(timer);
+            window.removeEventListener('focus', updateElo);
+        };
+    }, [updateElo]);
 
     return (
         <ThemeProvider theme={theme}>
