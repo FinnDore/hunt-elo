@@ -15,8 +15,11 @@ import { getPath } from './_functions/get-path';
 import { Text } from '@visx/text';
 import { ParentSize } from '@visx/responsive';
 import { GradientOrangeRed } from '@visx/gradient';
-const DEFAULT_PATH =
-    'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Hunt Showdown\\user\\profiles\\default\\attributes.xml';
+import { environment } from '../environments/environment';
+
+const DEFAULT_PATH = environment.production
+    ? 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Hunt Showdown\\user\\profiles\\default\\attributes.xml'
+    : '../../hunt-elo/src/assets/attributes.xml';
 
 const theme = createTheme({
     palette: {
