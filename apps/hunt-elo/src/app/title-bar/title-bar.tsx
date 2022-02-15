@@ -13,8 +13,8 @@ import classes from './title-bar.module.scss';
 export function TitleBar() {
     const maximizeOrMinimize = useMemo(
         () => async () =>
-            (await appWindow.isFullscreen())
-                ? appWindow.setFullscreen(!(await appWindow.isFullscreen()))
+            (await appWindow.isMaximized())
+                ? appWindow.unmaximize()
                 : appWindow.maximize(),
         []
     );
