@@ -1,1 +1,35 @@
 /* Your styles goes here. */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.input {
+    width: 30%;
+}
+.container {
+    scroll-margin-top: 4rem;
+    width: calc(100vw - 4rem);
+    min-height: calc(100vh - 4rem);
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+
+    & > * {
+        margin: 0.2rem auto !important;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.elo {
+    width: 100%;
+    margin: 2rem auto !important;
+}
+
+.text-svg {
+    overflow: visible;
+}

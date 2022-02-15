@@ -17,10 +17,10 @@
  * @returns {Promise<[R, null] | [null, Error]>} the result or a parsed error
  */
 export async function to<R>(
-    promise: () => Promise<R>
+    promise: Promise<R>
 ): Promise<[R, null] | [null, Error]> {
     try {
-        return [await promise(), null];
+        return [await promise, null];
     } catch (e) {
         return [null, e instanceof Error ? e : new Error(String(e))];
     }
