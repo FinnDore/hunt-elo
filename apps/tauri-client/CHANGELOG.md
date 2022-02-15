@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.1](https://github.com/FinnDore/hunt-elo/compare/v0.2.0...v0.2.1) (2022-02-15)
+
+
+### Bug Fixes
+
+* path selection button not working ([#4](https://github.com/FinnDore/hunt-elo/issues/4)) ([a079366](https://github.com/FinnDore/hunt-elo/commit/a0793668ef272624afbbbb35fd9e14342f154320))
+
+
+
 # [0.2.0](https://github.com/FinnDore/hunt-elo/compare/v0.1.1...v0.2.0) (2022-02-15)
 
 
