@@ -47,7 +47,16 @@
             "active": false
         },
         "allowlist": {
-            "all": true
+            "window": {
+                "all": true,
+                "maximize": true,
+                "unmaximize": true,
+                "hide": true,
+                "close": true
+            },
+            "fs": {
+                "all": true
+            }
         },
         "windows": [
             {

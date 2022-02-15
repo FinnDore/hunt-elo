@@ -1,3 +1,4 @@
+import { Pin } from '@mui/icons-material';
 import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';
@@ -24,7 +25,7 @@ export function TitleBar() {
             <Button onClick={() => appWindow.minimize()}>
                 <MinimizeOutlinedIcon></MinimizeOutlinedIcon>
             </Button>
-            <Button onClick={maximizeOrMinimize}>
+            <Button onClick={() => maximizeOrMinimize()}>
                 <CheckBoxOutlineBlankOutlinedIcon></CheckBoxOutlineBlankOutlinedIcon>
             </Button>
             <Button onClick={() => appWindow.close()}>
