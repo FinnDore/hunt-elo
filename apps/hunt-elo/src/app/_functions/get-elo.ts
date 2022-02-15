@@ -1,6 +1,6 @@
-import { dialog } from '@tauri-apps/api';
 import { to } from '@hunt-elo/utils';
 import { readTextFile } from '@tauri-apps/api/fs';
+import { getPath } from './get-path';
 
 /**
  * Returns the elo for a given user
@@ -12,26 +12,24 @@ export async function getElo(
     userName: string,
     pathOverride?: string
 ): Promise<number | null> {
-    let path: string | string[];
+    let path: string;
+
     if (!pathOverride) {
-        path = await dialog.open({
-            directory: false,
-        });
+        const [userSelectedPath, getPathError] = await getPath();
+        if (getPathError || !userSelectedPath) {
+            return null;
+        }
+        path = userSelectedPath;
     } else {
         path = pathOverride;
     }
-    let file = null;
-    let error = null;
-    if (typeof path === 'string') {
-        [file, error] = await to(readTextFile(path));
-    } else {
-        [file, error] = await to(readTextFile(path[0]));
-    }
 
+    const [file, error] = await to(readTextFile(path));
     if (!file || error) {
         console.log(error);
         return null;
     }
+
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(file, 'text/xml');
 

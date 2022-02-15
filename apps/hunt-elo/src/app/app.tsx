@@ -5,37 +5,29 @@ import {
     TextField,
     ThemeProvider,
 } from '@mui/material';
-import { dialog } from '@tauri-apps/api';
 import { useMemo, useState } from 'react';
 import { getElo } from './_functions/get-elo';
+import { getPath } from './_functions/get-path';
 
 const DEFAULT_PATH =
     'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Hunt Showdown\\user\\profiles\\default\\attributes.xml';
 
-// eslint-disable-next-line require-jsdoc
-async function getPath() {
-    const path = await dialog.open({
-        directory: false,
-    });
+const theme = createTheme({
+    palette: {
+        mode: 'dark',
+        primary: {
+            main: '#ffff',
+        },
+        contrastThreshold: 3,
+        tonalOffset: 0.1,
+    },
+});
 
-    return typeof path === 'string' ? path : path[0];
-}
 /**
  * The app component
  * @returns {object} the app component
  */
 export function App() {
-    const theme = createTheme({
-        palette: {
-            mode: 'dark',
-            primary: {
-                main: '#000000',
-            },
-            contrastThreshold: 3,
-            tonalOffset: 0.6,
-        },
-    });
-
     const [username, setUsername] = useState<string>('');
     const [elo, setElo] = useState<number | null>(null);
     const [path, setPath] = useState<string>(DEFAULT_PATH);
@@ -51,7 +43,9 @@ export function App() {
             <div className="container" data-tauri-drag-region="">
                 <Button
                     variant="contained"
-                    onClick={async () => setPath(await getPath())}
+                    onClick={async () =>
+                        setPath((await getPath())[0] ?? DEFAULT_PATH)
+                    }
                 >
                     Set custom Path
                 </Button>
