@@ -2,13 +2,15 @@
 .header {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
-
+.input {
+    width: 30%;
+}
 .container {
     scroll-margin-top: 4rem;
     width: calc(100vw - 4rem);
-    min-height: 100vh;
+    min-height: calc(100vh - 4rem);
     max-width: 1000px;
     margin: auto;
     display: flex;
@@ -18,13 +20,17 @@
 
     & > * {
         margin: 0.2rem auto !important;
-        width: 50%;
+        width: 100%;
         text-align: center;
     }
 }
+
 .elo {
-    font-variant: small-caps;
-    font-size: 5rem;
-    color: rgb(255, 72, 0);
-    margin-left: 1rem;
+    width: 100%;
+    margin: 2rem auto !important;
+}
+
+.text-svg {
+    min-height: 20rem;
+    overflow: visible;
 }

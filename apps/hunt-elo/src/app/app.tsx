@@ -9,9 +9,12 @@ import {
 } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import classes from './app.module.scss';
+import TitleBar from './title-bar/title-bar';
 import { getElo } from './_functions/get-elo';
 import { getPath } from './_functions/get-path';
-
+import { Text } from '@visx/text';
+import { ParentSize } from '@visx/responsive';
+import { GradientOrangeRed } from '@visx/gradient';
 const DEFAULT_PATH =
     'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Hunt Showdown\\user\\profiles\\default\\attributes.xml';
 
@@ -19,7 +22,7 @@ const theme = createTheme({
     palette: {
         mode: 'dark',
         primary: {
-            main: '#ff4800',
+            main: '#face88',
         },
         secondary: {
             main: '#00f2c4',
@@ -61,8 +64,19 @@ export function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <div className={classes['container']} data-tauri-drag-region="">
+            <TitleBar></TitleBar>
+            <div className={classes['container']} data-tauri-drag-region>
                 <div className={classes['header']}>
+                    <TextField
+                        className={classes['input']}
+                        id="outlined-basic"
+                        label="username"
+                        onChange={(e) => {
+                            setUsername(e.target.value ?? '');
+                        }}
+                        variant="outlined"
+                        helperText="case sensitive"
+                    />
                     <Tooltip title="Set Custom path">
                         <IconButton aria-label="settings" size="large">
                             <SettingsIcon
@@ -77,20 +91,26 @@ export function App() {
                     </Tooltip>
                 </div>
 
-                <div>Enter your username ( case sensitive )</div>
-                <TextField
-                    id="outlined-basic"
-                    label="username"
-                    onChange={(e) => {
-                        setUsername(e.target.value ?? '');
-                    }}
-                    variant="outlined"
-                />
                 {elo !== null ? (
                     <div className={classes['elo']}>
-                        <Tooltip title="Your Elo">
-                            <b>{elo}</b>
-                        </Tooltip>
+                        <ParentSize>
+                            {({ width }) => (
+                                <svg
+                                    width={width}
+                                    className={classes['text-svg']}
+                                >
+                                    <GradientOrangeRed id="elo-gradient" />
+                                    <Text
+                                        verticalAnchor="start"
+                                        scaleToFit={true}
+                                        width={width * 0.95}
+                                        fill="url(#elo-gradient)"
+                                    >
+                                        {elo}
+                                    </Text>
+                                </svg>
+                            )}
+                        </ParentSize>
                     </div>
                 ) : (
                     <div>no user found</div>

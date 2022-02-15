@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import App from './app';
+import App from './title-bar/title-bar';
 
 describe('App', () => {
     it('should render successfully', () => {
