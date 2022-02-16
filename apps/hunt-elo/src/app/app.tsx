@@ -16,24 +16,14 @@ import { Text } from '@visx/text';
 import { ParentSize } from '@visx/responsive';
 import { GradientOrangeRed } from '@visx/gradient';
 import { environment } from '../environments/environment';
+import { useSelector } from 'react-redux';
+import { pathSelector } from './_store/_selectors/path.selector';
+import { themeModeSelector } from './_store/_selectors/theme-mode.selector';
+import { setPath } from './_store/_actions/set-path.action';
 
 const DEFAULT_PATH = environment.production
     ? 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Hunt Showdown\\user\\profiles\\default\\attributes.xml'
     : '../../hunt-elo/src/assets/attributes.xml';
-
-const theme = createTheme({
-    palette: {
-        mode: 'dark',
-        primary: {
-            main: '#face88',
-        },
-        secondary: {
-            main: '#00f2c4',
-        },
-        contrastThreshold: 3,
-        tonalOffset: 0.1,
-    },
-});
 
 /**
  * The app component
@@ -42,7 +32,9 @@ const theme = createTheme({
 export function App() {
     const [username, setUsername] = useState<string>('');
     const [elo, setElo] = useState<number | null>(null);
-    const [path, setPath] = useState<string>(DEFAULT_PATH);
+
+    const path = useSelector(pathSelector);
+    const themeMode = useSelector(themeModeSelector);
 
     useMemo(
         async () => setElo(await getElo(username, path ?? DEFAULT_PATH)),
@@ -52,6 +44,34 @@ export function App() {
     const updateElo = useMemo(
         () => async () => setElo(await getElo(username, path ?? DEFAULT_PATH)),
         [username, path]
+    );
+
+    const theme = useMemo(
+        () =>
+            createTheme({
+                palette: {
+                    mode: themeMode,
+                    primary: {
+                        main: '#face88',
+                    },
+                    secondary: {
+                        main: '#00f2c4',
+                    },
+                    contrastThreshold: 3,
+                    tonalOffset: 0.1,
+                },
+            }),
+        [themeMode]
+    );
+
+    const setCurrentPath = useMemo(
+        () => async () => {
+            const path = (await getPath())?.[0];
+            if (path) {
+                setPath(path);
+            }
+        },
+        []
     );
 
     useEffect(() => {
@@ -74,7 +94,7 @@ export function App() {
                         className={classes['input']}
                         id="outlined-basic"
                         label="username"
-                        onChange={(e) => {
+                        onChange={e => {
                             setUsername(e.target.value ?? '');
                         }}
                         variant="outlined"
@@ -83,9 +103,7 @@ export function App() {
                     <IconButton
                         aria-label="settings"
                         size="large"
-                        onClick={async () =>
-                            setPath((await getPath())?.[0] ?? DEFAULT_PATH)
-                        }
+                        onClick={setCurrentPath}
                     >
                         <SettingsIcon fontSize="inherit" />
                     </IconButton>
