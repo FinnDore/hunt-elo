@@ -56,7 +56,7 @@ export function App() {
 
     useEffect(() => {
         window.addEventListener('focus', updateElo);
-        const timer = setInterval(updateElo, 5000);
+        const timer = setInterval(updateElo, 3000);
 
         return () => {
             clearInterval(timer);
