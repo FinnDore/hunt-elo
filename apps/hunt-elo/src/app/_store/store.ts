@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { settingsReducer } from './_reducers/update-theme.reducer';
+import { settingsReducer } from './_reducers/settings.reducer';
 
 const rootReducer = combineReducers({
     settings: settingsReducer,

@@ -10,7 +10,7 @@ import {
 import { useEffect, useMemo, useState } from 'react';
 import classes from './app.module.scss';
 import TitleBar from './title-bar/title-bar';
-import { getElo } from './_functions/get-elo';
+import { getEloAndId } from './_functions/get-elo-and-id';
 import { getPath } from './_functions/get-path';
 import { Text } from '@visx/text';
 import { ParentSize } from '@visx/responsive';
@@ -26,6 +26,20 @@ const DEFAULT_PATH = environment.production
     : '../../hunt-elo/src/assets/attributes.xml';
 
 /**
+ * Returns the elo for a given user
+ * @param username the username to use
+ * @param path the path to use
+ * @returns {number | null} the elo for the user
+ */
+async function getElo(username: string, path: string): Promise<number | null> {
+    const eloAnId = await getEloAndId(username, path ?? DEFAULT_PATH);
+    if (!eloAnId) {
+        return null;
+    }
+    return eloAnId.elo;
+}
+
+/**
  * The app component
  * @returns {object} the app component
  */
@@ -36,10 +50,7 @@ export function App() {
     const path = useSelector(pathSelector);
     const themeMode = useSelector(themeModeSelector);
 
-    useMemo(
-        async () => setElo(await getElo(username, path ?? DEFAULT_PATH)),
-        [username, path]
-    );
+    useMemo(async () => setElo(await getElo(username, path)), [username, path]);
 
     const updateElo = useMemo(
         () => async () => setElo(await getElo(username, path ?? DEFAULT_PATH)),

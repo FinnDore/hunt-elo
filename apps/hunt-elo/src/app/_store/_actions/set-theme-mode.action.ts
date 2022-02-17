@@ -1,7 +1,7 @@
 import { StoreAction } from '../../_enums/store-action';
 import { ThemeMode } from '../../_enums/theme-mode';
 import { GlobalStore } from '../store';
-import { settingsReducerPayload } from '../_reducers/update-theme.reducer';
+import { settingsReducerPayload } from '../_reducers/settings.reducer';
 
 /**
  * Sets the current theme mode

@@ -3,15 +3,15 @@ import { readTextFile } from '@tauri-apps/api/fs';
 import { getPath } from './get-path';
 
 /**
- * Returns the elo for a given user
+ * Returns the elo and id for a given user
  * @param userName the user to get the elo for
  * @param pathOverride the path to use instead
- * @returns {number | null} the elo for the given user
+ * @returns {object} the elo and id for the given user
  */
-export async function getElo(
+export async function getEloAndId(
     userName: string,
     pathOverride?: string
-): Promise<number | null> {
+): Promise<{ elo: number; userId: number } | null> {
     let path: string;
 
     if (!pathOverride) {
@@ -46,17 +46,28 @@ export async function getElo(
         }
 
         const prefix = attrName.value.replace('blood_line_name', '');
+        let elo: number | null = null;
+        let userId: number | null = null;
+
         for (let i = 0; i < attrs.length; i++) {
             const attrName = attrs.item(i)?.attributes.getNamedItem('name');
-
             if (attrName?.value === prefix + 'mmr') {
                 const mmr = attrs.item(i)?.attributes.getNamedItem('value');
                 if (mmr?.value) {
-                    return parseInt(mmr?.value) ?? null;
+                    elo = +mmr?.value ?? null;
                 } else {
                     return null;
                 }
+            } else if (attrName?.value === prefix + 'profileid') {
+                const idAttr = attrs.item(i)?.attributes.getNamedItem('value');
+                if (idAttr?.value) {
+                    userId = +idAttr?.value;
+                }
             }
+        }
+
+        if (userId !== null && elo !== null) {
+            return { userId, elo };
         }
     }
 
