@@ -10,4 +10,8 @@ export enum StoreAction {
      * Sets the current path
      */
     SET_PATH = 'SET_PATH',
+    /**
+     * Appends an elo value for a given player
+     */
+    APPEND_ELO = 'APPEND_ELO',
 }
