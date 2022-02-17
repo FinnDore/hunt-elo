@@ -7,7 +7,7 @@ import {
     ThemeProvider,
     Tooltip,
 } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import classes from './app.module.scss';
 import TitleBar from './title-bar/title-bar';
 import { getEloAndId } from './_functions/get-elo-and-id';
@@ -20,6 +20,10 @@ import { useSelector } from 'react-redux';
 import { pathSelector } from './_store/_selectors/path.selector';
 import { themeModeSelector } from './_store/_selectors/theme-mode.selector';
 import { setPath } from './_store/_actions/set-path.action';
+import { appendEloById } from './_store/_actions/append-elo.action';
+import { eloSelector } from './_store/_selectors/elo.selector';
+import { setUserNameById } from './_store/_actions/set-user-name.action';
+import { eloHistorySelector } from './_store/_selectors/elo-history.selector';
 
 const DEFAULT_PATH = environment.production
     ? 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Hunt Showdown\\user\\profiles\\default\\attributes.xml'
@@ -29,14 +33,21 @@ const DEFAULT_PATH = environment.production
  * Returns the elo for a given user
  * @param username the username to use
  * @param path the path to use
- * @returns {number | null} the elo for the user
+ * @param currentElo the currentElo
+ * @returns {boolean} indicating if there was an error appending the elo
  */
-async function getElo(username: string, path: string): Promise<number | null> {
+async function updateElo(
+    username: string,
+    path: string,
+    currentElo: number | null
+): Promise<boolean> {
     const eloAnId = await getEloAndId(username, path ?? DEFAULT_PATH);
-    if (!eloAnId) {
-        return null;
+    if (!eloAnId || eloAnId?.elo === currentElo) {
+        return false;
     }
-    return eloAnId.elo;
+
+    appendEloById(eloAnId.elo, eloAnId.userId);
+    return true;
 }
 
 /**
@@ -45,20 +56,51 @@ async function getElo(username: string, path: string): Promise<number | null> {
  */
 export function App() {
     const [username, setUsername] = useState<string>('');
-    const [elo, setElo] = useState<number | null>(null);
+    const [currentUserId, setCurrentUserId] = useState<number | null>(null);
 
     const path = useSelector(pathSelector);
     const themeMode = useSelector(themeModeSelector);
 
-    // const elo2 = useMemo(() => useSelector(eloSelector(userId)), [userId] )
-    // const elo2 = useMemo(() => useSelector(eloSelector(userId)), [userId] )
+    const elo = useSelector(eloSelector(currentUserId));
 
-    useMemo(async () => setElo(await getElo(username, path)), [username, path]);
-
-    const updateElo = useMemo(
-        () => async () => setElo(await getElo(username, path ?? DEFAULT_PATH)),
-        [username, path]
+    const refreshElo = useMemo(
+        () => (): Promise<boolean> => updateElo(username, path, elo),
+        [username, path, elo]
     );
+
+    useEffect(() => {
+        (async () => {
+            const eloAndId = await getEloAndId(username, path);
+            setCurrentUserId(eloAndId?.userId ?? null);
+            if (typeof eloAndId?.userId === 'number') {
+                setUserNameById(username, eloAndId.userId);
+            }
+        })();
+    }, [username, path]);
+
+    useEffect(() => {
+        refreshElo();
+    }, [refreshElo]);
+
+    const setCurrentPath = useMemo(
+        () => async () => {
+            const path = (await getPath())?.[0];
+            if (path) {
+                setPath(path);
+            }
+        },
+        []
+    );
+
+    useEffect(() => {
+        window.addEventListener('focus', refreshElo);
+        const timer = setInterval(refreshElo, 3000);
+
+        return () => {
+            clearInterval(timer);
+            window.removeEventListener('focus', refreshElo);
+        };
+    }, [refreshElo]);
 
     const theme = useMemo(
         () =>
@@ -74,26 +116,6 @@ export function App() {
             }),
         [themeMode]
     );
-
-    const setCurrentPath = useMemo(
-        () => async () => {
-            const path = (await getPath())?.[0];
-            if (path) {
-                setPath(path);
-            }
-        },
-        []
-    );
-
-    useEffect(() => {
-        window.addEventListener('focus', updateElo);
-        const timer = setInterval(updateElo, 3000);
-
-        return () => {
-            clearInterval(timer);
-            window.removeEventListener('focus', updateElo);
-        };
-    }, [updateElo]);
 
     return (
         <ThemeProvider theme={theme}>

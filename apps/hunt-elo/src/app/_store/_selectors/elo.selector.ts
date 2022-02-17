@@ -6,7 +6,11 @@ import { eloHistorySelector } from './elo-history.selector';
  * @param userId the of the user to retrieve elo for
  * @returns {number | null} the elo for the given user
  */
-export function eloSelector(userId: number) {
+export function eloSelector(userId: number | null) {
+    if (userId === null) {
+        return () => null;
+    }
+
     return createSelector(eloHistorySelector(userId), eloHistory =>
         eloHistory ? eloHistory[eloHistory.length - 1] : null
     );
