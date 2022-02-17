@@ -50,6 +50,9 @@ export function App() {
     const path = useSelector(pathSelector);
     const themeMode = useSelector(themeModeSelector);
 
+    // const elo2 = useMemo(() => useSelector(eloSelector(userId)), [userId] )
+    // const elo2 = useMemo(() => useSelector(eloSelector(userId)), [userId] )
+
     useMemo(async () => setElo(await getElo(username, path)), [username, path]);
 
     const updateElo = useMemo(
