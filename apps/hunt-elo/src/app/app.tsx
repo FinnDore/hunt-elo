@@ -54,9 +54,6 @@ export function App() {
                     primary: {
                         main: '#face88',
                     },
-                    secondary: {
-                        main: '#00f2c4',
-                    },
                     contrastThreshold: 3,
                     tonalOffset: 0.1,
                 },
