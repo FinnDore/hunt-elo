@@ -24,6 +24,7 @@ import { appendEloById } from './_store/_actions/append-elo.action';
 import { eloSelector } from './_store/_selectors/elo.selector';
 import { setUserNameById } from './_store/_actions/set-user-name.action';
 import { eloHistorySelector } from './_store/_selectors/elo-history.selector';
+import { Settings } from './features/settings/settings';
 
 const DEFAULT_PATH = environment.production
     ? 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Hunt Showdown\\user\\profiles\\default\\attributes.xml'
@@ -123,16 +124,6 @@ export function App() {
             <TitleBar></TitleBar>
             <div className={classes['container']} data-tauri-drag-region>
                 <div className={classes['header']}>
-                    <TextField
-                        className={classes['input']}
-                        id="outlined-basic"
-                        label="username"
-                        onChange={e => {
-                            setUsername(e.target.value ?? '');
-                        }}
-                        variant="outlined"
-                        helperText="case sensitive"
-                    />
                     <IconButton
                         aria-label="settings"
                         size="large"
@@ -141,7 +132,12 @@ export function App() {
                         <SettingsIcon fontSize="inherit" />
                     </IconButton>
                 </div>
-
+                <div
+                    className={classes['overlay']}
+                    style={{ background: palette.background.default }}
+                >
+                    <Settings></Settings>
+                </div>
                 {elo !== null ? (
                     <div className={classes['elo']}>
                         <ParentSize>

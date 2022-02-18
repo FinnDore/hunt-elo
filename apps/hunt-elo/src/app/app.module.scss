@@ -1,3 +1,5 @@
+i
+
 /* Your styles goes here. */
 .header {
     display: flex;
@@ -32,4 +34,12 @@
 
 .text-svg {
     overflow: visible;
+}
+
+.overlay {
+    min-height: calc(100vh - 4rem);
+
+    top: 4rem;
+    height: 100%;
+    position: absolute;
 }
