@@ -5,7 +5,7 @@ import { getDocument } from './get-document';
 /**
  * Returns attrs for a given user by their userName
  *
- * @param userName the user to get the elo for
+ * @param userName the user to get the attrs for
  * @param path the path to the attributes.xml file
  * @returns {object} the elo and id for the given user
  */

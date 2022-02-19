@@ -3,14 +3,14 @@ import { extractAttrs } from './extract-attrs';
 import { getDocument } from './get-document';
 
 /**
- * Returns attrs for a given user by their userName
+ * Returns attrs for a given user by their id
  *
- * @param userName the user to get the elo for
+ * @param id the id of user to get the attrs for
  * @param path the path to the attributes.xml file
  * @returns {object} the elo and id for the given user
  */
-export async function getAttrsByUserName(
-    userName: string,
+export async function getAttrsByUserId(
+    id: number,
     path: string
 ): Promise<PlayerAttrs | null> {
     const document = await getDocument(path);
@@ -21,5 +21,5 @@ export async function getAttrsByUserName(
 
     const attrs = extractAttrs(document);
 
-    return attrs.find(x => x.name === userName) ?? null;
+    return attrs.find(x => x.id === id) ?? null;
 }

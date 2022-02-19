@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { environment } from '../../../environments/environment.prod';
 import { ActiveOverlay } from '../../_enums/current-overlay';
+import { getAttrsByUserId } from '../../_functions/get-attrs-by-id';
 import { getAttrsByUserName } from '../../_functions/get-attrs-by-name';
 import { getPath } from '../../_functions/get-path';
 import { logElo } from '../../_functions/log-elo';
@@ -45,22 +46,6 @@ export function SettingsOverlay() {
         })();
     }, [inputtedUsername, path]);
 
-    const refreshElo = useCallback(async () => {
-        const userAttrs = await getAttrsByUserName(inputtedUsername, path);
-        console.log(1);
-        if (userAttrs) {
-            appendEloById(userAttrs.elo, userAttrs.id);
-        }
-    }, [inputtedUsername, path]);
-
-    useEffect(() => {
-        logElo(eloHistory ?? []);
-    }, [eloHistory]);
-
-    useEffect(() => {
-        refreshElo();
-    }, [refreshElo]);
-
     const setCurrentPath = useMemo(
         () => async () => {
             const path = (await getPath())?.[0];
@@ -70,15 +55,6 @@ export function SettingsOverlay() {
         },
         []
     );
-
-    useEffect(() => {
-        window.addEventListener('focus', refreshElo);
-        const timer = setInterval(refreshElo, 3000);
-        return () => {
-            clearInterval(timer);
-            window.removeEventListener('focus', refreshElo);
-        };
-    }, [refreshElo]);
 
     return (
         <div className={classes['header']}>

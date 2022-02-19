@@ -57,9 +57,12 @@ export function App() {
                         <SettingsIcon fontSize="inherit" />
                     </IconButton>
                 </div>
+
                 <div className={classes['elo-display']}>
                     <EloDisplay />
                 </div>
+
+                {/* used to center the elo display vertically */}
                 <div className={`${classes['header']} ${classes['hidden']}`}>
                     <IconButton
                         aria-label="settings"

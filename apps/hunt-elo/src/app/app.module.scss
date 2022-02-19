@@ -45,3 +45,8 @@ i
 .hidden {
     visibility: hidden;
 }
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+}
