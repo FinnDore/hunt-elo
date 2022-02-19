@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { RootState } from '../store';
+import { RootState } from '../../store';
 
 /**
  * Select the current theme mode

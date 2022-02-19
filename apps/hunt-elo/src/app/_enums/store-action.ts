@@ -11,6 +11,10 @@ export enum StoreAction {
      * Sets the current path
      */
     SET_PATH = 'SET_PATH',
+    /**
+     * Sets the current overlay
+     */
+    SET_ACTIVE_OVERLAY = 'SET_ACTIVE_OVERLAY',
 
     /** elo store */
 

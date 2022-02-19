@@ -5,26 +5,16 @@ import {
     IconButton,
     ThemeProvider,
 } from '@mui/material';
-import { GradientOrangeRed } from '@visx/gradient';
-import { ParentSize } from '@visx/responsive';
-import { Text } from '@visx/text';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { environment } from '../environments/environment';
 import classes from './app.module.scss';
-import EloDisplay from './features/elo-disaplay/elo-display';
+import EloDisplay from './features/elo-display/elo-display';
 import { Settings } from './features/settings/settings';
 import TitleBar from './title-bar/title-bar';
-import { getEloAndId } from './_functions/get-elo-and-id';
-import { getPath } from './_functions/get-path';
-import { logElo } from './_functions/log-elo';
-import { appendEloById } from './_store/_actions/append-elo.action';
-import { setPath } from './_store/_actions/set-path.action';
-import { setUserNameById } from './_store/_actions/set-user-name.action';
-import { eloHistorySelector } from './_store/_selectors/elo-history.selector';
-import { eloSelector } from './_store/_selectors/elo.selector';
-import { pathSelector } from './_store/_selectors/path.selector';
-import { themeModeSelector } from './_store/_selectors/theme-mode.selector';
+import { ActiveOverlay } from './_enums/current-overlay';
+import { setActiveOverlay } from './_store/_actions/set-active-overlay.action';
+import { activeOverlaySelector } from './_store/_selectors/settings/active-overlay.selector';
+import { themeModeSelector } from './_store/_selectors/settings/theme-mode.selector';
 
 /**
  * The app component
@@ -47,18 +37,26 @@ export function App() {
         [themeMode]
     );
 
-    const [showSettings, setShowSettings] = useState(false);
-
+    const activeOverlay = useSelector(activeOverlaySelector);
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <TitleBar></TitleBar>
-            {showSettings && (
+            {activeOverlay === ActiveOverlay.SETTINGS && (
                 <div className={classes['overlay']}>
                     <Settings></Settings>
                 </div>
             )}
             <div className={classes['container']} data-tauri-drag-region>
+                <div className={classes['header']}>
+                    <IconButton
+                        aria-label="settings"
+                        size="large"
+                        onClick={() => setActiveOverlay(ActiveOverlay.SETTINGS)}
+                    >
+                        <SettingsIcon fontSize="inherit" />
+                    </IconButton>
+                </div>
                 <EloDisplay />
             </div>
         </ThemeProvider>

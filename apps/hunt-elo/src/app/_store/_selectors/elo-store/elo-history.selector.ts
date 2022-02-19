@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { RootState } from '../store';
+import { RootState } from '../../store';
 
 /**
  * Select the elo history for a given user

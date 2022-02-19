@@ -1,3 +1,5 @@
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { environment } from '../../../environments/environment.prod';
@@ -7,9 +9,14 @@ import { logElo } from '../../_functions/log-elo';
 import { appendEloById } from '../../_store/_actions/append-elo.action';
 import { setPath } from '../../_store/_actions/set-path.action';
 import { setUserNameById } from '../../_store/_actions/set-user-name.action';
-import { eloHistorySelector } from '../../_store/_selectors/elo-history.selector';
-import { eloSelector } from '../../_store/_selectors/elo.selector';
-import { pathSelector } from '../../_store/_selectors/path.selector';
+import { eloHistorySelector } from '../../_store/_selectors/elo-store/elo-history.selector';
+import { eloSelector } from '../../_store/_selectors/elo-store/elo.selector';
+import { pathSelector } from '../../_store/_selectors/settings/path.selector';
+import classes from './settings.module.scss';
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+import SettingsIcon from '@mui/icons-material/settings';
+import { ActiveOverlay } from '../../_enums/current-overlay';
+import { setActiveOverlay } from '../../_store/_actions/set-active-overlay.action';
 
 const DEFAULT_PATH = environment.production
     ? 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Hunt Showdown\\user\\profiles\\default\\attributes.xml'
@@ -92,7 +99,35 @@ export function Settings() {
         };
     }, [refreshElo]);
 
-    return <div>div</div>;
+    return (
+        <div className={classes['header']}>
+            <TextField
+                className={classes['input']}
+                id="outlined-basic"
+                label="username"
+                onChange={e => {
+                    setUsername(e.target.value ?? '');
+                }}
+                variant="outlined"
+                helperText="case sensitive"
+            />
+            <IconButton
+                aria-label="settings"
+                size="large"
+                onClick={setCurrentPath}
+            >
+                <SettingsIcon fontSize="inherit" />
+            </IconButton>
+
+            <IconButton
+                aria-label="settings"
+                size="large"
+                onClick={() => setActiveOverlay(ActiveOverlay.NONE)}
+            >
+                <ClearOutlinedIcon fontSize="inherit" />
+            </IconButton>
+        </div>
+    );
 }
 
 export default Settings;

@@ -1,10 +1,9 @@
 import { GradientOrangeRed } from '@visx/gradient';
 import { ParentSize } from '@visx/responsive';
-import { useSelector } from 'react-redux';
-import { eloHistorySelector } from '../../_store/_selectors/elo-history.selector';
-import { eloSelector } from '../../_store/_selectors/elo.selector';
-import classes from './elo-display.module.scss';
 import { Text } from '@visx/text';
+import { useSelector } from 'react-redux';
+import { eloSelector } from '../../_store/_selectors/elo-store/elo.selector';
+import classes from './elo-display.module.scss';
 
 /**
  * The elo display component
