@@ -5,6 +5,7 @@ i
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
 }
 .input {
     width: 30%;
@@ -12,7 +13,8 @@ i
 .container {
     scroll-margin-top: 4rem;
     width: calc(100vw - 4rem);
-    min-height: calc(100vh - 4rem);
+    height: calc(100vh - 4rem);
+    max-height: calc(100vh - 4rem);
     max-width: 1000px;
     margin: auto;
     display: flex;
@@ -21,19 +23,9 @@ i
     margin: auto;
 
     & > * {
-        margin: 0.2rem auto !important;
         width: 100%;
         text-align: center;
     }
-}
-
-.elo {
-    width: 100%;
-    margin: 2rem auto !important;
-}
-
-.text-svg {
-    overflow: visible;
 }
 
 .overlay {
@@ -44,4 +36,12 @@ i
     top: 3rem;
     background-color: black;
     z-index: 1;
+}
+
+.elo-display {
+    margin: auto;
+}
+
+.hidden {
+    visibility: hidden;
 }

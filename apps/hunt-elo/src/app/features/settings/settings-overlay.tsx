@@ -2,11 +2,11 @@ import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import SettingsIcon from '@mui/icons-material/settings';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { environment } from '../../../environments/environment.prod';
 import { ActiveOverlay } from '../../_enums/current-overlay';
-import { getEloAndId } from '../../_functions/get-elo-and-id';
+import { getAttrsByUserName } from '../../_functions/get-attrs-by-name';
 import { getPath } from '../../_functions/get-path';
 import { logElo } from '../../_functions/log-elo';
 import { appendEloById } from '../../_store/_actions/elo-store/append-elo.action';
@@ -15,35 +15,13 @@ import { setActiveOverlay } from '../../_store/_actions/settings/set-active-over
 import { setPath } from '../../_store/_actions/settings/set-path.action';
 import { setSelectedUserId } from '../../_store/_actions/settings/set-selected-user-id.action';
 import { eloHistorySelector } from '../../_store/_selectors/elo-store/elo-history.selector';
-import { eloSelector } from '../../_store/_selectors/elo-store/elo.selector';
 import { pathSelector } from '../../_store/_selectors/settings/path.selector';
-import { selectedUserIdSelector } from '../../_store/_selectors/settings/selected-user-id.selector copy';
+import { selectedUserIdSelector } from '../../_store/_selectors/settings/selected-user-id.selector';
 import classes from './settings-overlay.module.scss';
 
 const DEFAULT_PATH = environment.production
     ? 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Hunt Showdown\\user\\profiles\\default\\attributes.xml'
     : '../../hunt-elo/src/assets/attributes.xml';
-
-/**
- * Returns the elo for a given user
- * @param username the username to use
- * @param path the path to use
- * @param currentElo the currentElo
- * @returns {boolean} indicating if there was an error appending the elo
- */
-async function updateElo(
-    username: string,
-    path: string,
-    currentElo: number | null
-): Promise<boolean> {
-    const eloAnId = await getEloAndId(username, path ?? DEFAULT_PATH);
-    if (!eloAnId || eloAnId?.elo === currentElo) {
-        return false;
-    }
-
-    appendEloById(eloAnId.elo, eloAnId.userId);
-    return true;
-}
 
 /**
  * The settings component
@@ -55,23 +33,24 @@ export function SettingsOverlay() {
     const path = useSelector(pathSelector);
 
     const userId = useSelector(selectedUserIdSelector);
-    const elo = useSelector(eloSelector(userId));
     const eloHistory = useSelector(eloHistorySelector(userId));
-    console.log(userId);
-    console.log(elo);
-    const refreshElo = useMemo(
-        () => (): Promise<boolean> => updateElo(inputtedUsername, path, elo),
-        [inputtedUsername, path, elo]
-    );
 
     useEffect(() => {
         (async () => {
-            const eloAndId = await getEloAndId(inputtedUsername, path);
-            if (typeof eloAndId?.userId === 'number') {
-                setUserNameById(inputtedUsername, eloAndId.userId);
-                setSelectedUserId(eloAndId.userId);
+            const userAttrs = await getAttrsByUserName(inputtedUsername, path);
+            if (userAttrs) {
+                setUserNameById(userAttrs.name, userAttrs.id);
+                setSelectedUserId(userAttrs.id);
             }
         })();
+    }, [inputtedUsername, path]);
+
+    const refreshElo = useCallback(async () => {
+        const userAttrs = await getAttrsByUserName(inputtedUsername, path);
+        console.log(1);
+        if (userAttrs) {
+            appendEloById(userAttrs.elo, userAttrs.id);
+        }
     }, [inputtedUsername, path]);
 
     useEffect(() => {
@@ -95,7 +74,6 @@ export function SettingsOverlay() {
     useEffect(() => {
         window.addEventListener('focus', refreshElo);
         const timer = setInterval(refreshElo, 3000);
-
         return () => {
             clearInterval(timer);
             window.removeEventListener('focus', refreshElo);

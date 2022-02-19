@@ -57,7 +57,18 @@ export function App() {
                         <SettingsIcon fontSize="inherit" />
                     </IconButton>
                 </div>
-                <EloDisplay />
+                <div className={classes['elo-display']}>
+                    <EloDisplay />
+                </div>
+                <div className={`${classes['header']} ${classes['hidden']}`}>
+                    <IconButton
+                        aria-label="settings"
+                        size="large"
+                        onClick={() => setActiveOverlay(ActiveOverlay.SETTINGS)}
+                    >
+                        <SettingsIcon fontSize="inherit" />
+                    </IconButton>
+                </div>
             </div>
         </ThemeProvider>
     );

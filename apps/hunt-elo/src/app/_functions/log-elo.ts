@@ -24,7 +24,7 @@ export function logElo(history: number[]) {
         console.log(
             '%c ELO INCREASED ',
             'background: #00ff5e; color: white; font-weight: bolder',
-            `: from ${lastElo}  -> ${prevElo}`
+            `: from ${prevElo}  -> ${lastElo}`
         );
     } else {
         console.log(
