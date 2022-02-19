@@ -5,6 +5,7 @@ import {
     IconButton,
     ThemeProvider,
 } from '@mui/material';
+import { Box } from '@mui/system';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import classes from './app.module.scss';
@@ -30,6 +31,9 @@ export function App() {
                     primary: {
                         main: '#face88',
                     },
+                    background: {
+                        default: '#121212',
+                    },
                     contrastThreshold: 3,
                     tonalOffset: 0.1,
                 },
@@ -43,9 +47,12 @@ export function App() {
             <CssBaseline />
             <TitleBar></TitleBar>
             {activeOverlay === ActiveOverlay.SETTINGS && (
-                <div className={classes['overlay']}>
+                <Box
+                    className={classes['overlay']}
+                    sx={{ bgcolor: 'background.default' }}
+                >
                     <SettingsOverlay></SettingsOverlay>
-                </div>
+                </Box>
             )}
             <div className={classes['container']} data-tauri-drag-region>
                 <div className={classes['header']}>

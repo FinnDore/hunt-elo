@@ -1,21 +1,17 @@
-import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
-import SettingsIcon from '@mui/icons-material/settings';
-import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { environment } from '../../../environments/environment.prod';
 import { ActiveOverlay } from '../../_enums/current-overlay';
-import { getAttrsByUserId } from '../../_functions/get-attrs-by-id';
 import { getAttrsByUserName } from '../../_functions/get-attrs-by-name';
 import { getPath } from '../../_functions/get-path';
-import { logElo } from '../../_functions/log-elo';
-import { appendEloById } from '../../_store/_actions/elo-store/append-elo.action';
 import { setUserNameById } from '../../_store/_actions/elo-store/set-user-name.action';
 import { setActiveOverlay } from '../../_store/_actions/settings/set-active-overlay.action';
 import { setPath } from '../../_store/_actions/settings/set-path.action';
 import { setSelectedUserId } from '../../_store/_actions/settings/set-selected-user-id.action';
 import { eloHistorySelector } from '../../_store/_selectors/elo-store/elo-history.selector';
+import { selectedUserNameSelector } from '../../_store/_selectors/elo-store/selected-user-name.selector copy';
 import { pathSelector } from '../../_store/_selectors/settings/path.selector';
 import { selectedUserIdSelector } from '../../_store/_selectors/settings/selected-user-id.selector';
 import classes from './settings-overlay.module.scss';
@@ -29,19 +25,28 @@ const DEFAULT_PATH = environment.production
  * @returns {object} the settings component
  */
 export function SettingsOverlay() {
-    const [inputtedUsername, setInputtedUsername] = useState<string>('');
+    const [inputtedUsername, setInputtedUsername] = useState<string | null>(
+        null
+    );
 
     const path = useSelector(pathSelector);
 
     const userId = useSelector(selectedUserIdSelector);
-    const eloHistory = useSelector(eloHistorySelector(userId));
+    const userName = useSelector(selectedUserNameSelector);
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         (async () => {
+            if (!inputtedUsername) {
+                return;
+            }
             const userAttrs = await getAttrsByUserName(inputtedUsername, path);
             if (userAttrs) {
                 setUserNameById(userAttrs.name, userAttrs.id);
                 setSelectedUserId(userAttrs.id);
+                setErrorMessage('');
+            } else {
+                setErrorMessage('No user found');
             }
         })();
     }, [inputtedUsername, path]);
@@ -57,32 +62,37 @@ export function SettingsOverlay() {
     );
 
     return (
-        <div className={classes['header']}>
+        <div className={classes['container']}>
             <TextField
                 className={classes['input']}
                 id="outlined-basic"
                 label="username"
+                defaultValue={userName}
                 onChange={e => {
-                    setInputtedUsername(e.target.value ?? '');
+                    setInputtedUsername(e.target.value ?? null);
                 }}
                 variant="outlined"
-                helperText="case sensitive"
+                error={!!errorMessage}
+                helperText={errorMessage || 'case sensitive'}
             />
-            <IconButton
-                aria-label="settings"
+
+            <Button
+                aria-label="Set a custom path"
                 size="large"
+                variant="outlined"
                 onClick={setCurrentPath}
             >
-                <SettingsIcon fontSize="inherit" />
-            </IconButton>
+                Set custom Path
+            </Button>
 
-            <IconButton
-                aria-label="settings"
+            <Button
+                aria-label="Exit settings"
+                variant="contained"
                 size="large"
                 onClick={() => setActiveOverlay(ActiveOverlay.NONE)}
             >
-                <ClearOutlinedIcon fontSize="inherit" />
-            </IconButton>
+                Close
+            </Button>
         </div>
     );
 }
