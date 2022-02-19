@@ -47,6 +47,12 @@ export function eloStoreReducer(
     let newState = state;
     switch (action.type) {
         case StoreAction.APPEND_ELO:
+            // eslint-disable-next-line no-case-declarations
+            const eloHistory = state[action.payload.userId]?.eloHistory;
+            if (eloHistory?.[eloHistory.length - 1] === action.payload.elo) {
+                return state;
+            }
+
             newState = {
                 ...state,
                 [action.payload.userId]: {
@@ -57,8 +63,7 @@ export function eloStoreReducer(
                     ],
                 },
             };
-            console.log(newState);
-            console.log(action.payload);
+
             break;
 
         case StoreAction.SET_USER_NAME:
