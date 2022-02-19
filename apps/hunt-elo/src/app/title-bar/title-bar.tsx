@@ -1,4 +1,3 @@
-import { Pin } from '@mui/icons-material';
 import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';

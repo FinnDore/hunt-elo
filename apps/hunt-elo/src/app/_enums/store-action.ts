@@ -3,6 +3,7 @@
  */
 export enum StoreAction {
     /** settings */
+
     /**
      * Sets dark or light mode
      */
@@ -15,6 +16,10 @@ export enum StoreAction {
      * Sets the current overlay
      */
     SET_ACTIVE_OVERLAY = 'SET_ACTIVE_OVERLAY',
+    /**
+     * Sets the selected user id
+     */
+    SET_USER_ID = 'SET_USER_ID',
 
     /** elo store */
 
@@ -23,7 +28,7 @@ export enum StoreAction {
      */
     APPEND_ELO = 'APPEND_ELO',
     /**
-     * Appends an elo value for a given player
+     * Sets the users username given their id
      */
     SET_USER_NAME = 'SET_USER_NAME',
 }

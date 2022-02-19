@@ -1,7 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { extend, merge } from 'lodash';
 import { StoreAction } from '../../_enums/store-action';
-import { EloStore } from '../../_interfaces/elo-store';
+import { EloStore } from '../../_interfaces/elo-store.model';
 /**
  * Payload for appending an elo value ofr a given player
  */
@@ -44,36 +43,31 @@ export function eloStoreReducer(
     state = DEFAULT_STATE,
     action: appendEloReducerPayload | setUserNameReducerPayload
 ): EloStore {
-    let newState = state;
-    switch (action.type) {
-        case StoreAction.APPEND_ELO:
-            // eslint-disable-next-line no-case-declarations
-            const eloHistory = state[action.payload.userId]?.eloHistory;
-            if (eloHistory?.[eloHistory.length - 1] === action.payload.elo) {
-                return state;
-            }
+    if (action.type === StoreAction.APPEND_ELO) {
+        const eloHistory = state[action.payload.userId]?.eloHistory;
+        if (eloHistory?.[eloHistory.length - 1] === action.payload.elo) {
+            return state;
+        }
 
-            newState = {
-                ...state,
-                [action.payload.userId]: {
-                    ...(state[action.payload.userId] ?? {}),
-                    eloHistory: [
-                        ...(state[action.payload.userId]?.eloHistory ?? []),
-                        action.payload.elo,
-                    ],
-                },
-            };
-
-            break;
-
-        case StoreAction.SET_USER_NAME:
-            newState = {
-                ...state,
-                [action.payload.userId]: {
-                    ...(state[action.payload.userId] ?? {}),
-                    name: action.payload.userName,
-                },
-            };
+        return {
+            ...state,
+            [action.payload.userId]: {
+                ...(state[action.payload.userId] ?? {}),
+                eloHistory: [
+                    ...(state[action.payload.userId]?.eloHistory ?? []),
+                    action.payload.elo,
+                ],
+            },
+        };
+    } else if (action.type === StoreAction.SET_USER_NAME) {
+        return {
+            ...state,
+            [action.payload.userId]: {
+                ...(state[action.payload.userId] ?? {}),
+                name: action.payload.userName,
+            },
+        };
     }
-    return newState;
+
+    return state;
 }

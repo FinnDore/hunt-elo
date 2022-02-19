@@ -1,4 +1,4 @@
-import { EloStore } from '../_interfaces/elo-store';
+import { EloStore } from '../_interfaces/elo-store.model';
 import { Settings } from '../_interfaces/settings.model';
 
 /**

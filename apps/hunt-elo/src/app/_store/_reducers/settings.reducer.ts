@@ -1,11 +1,9 @@
-import { Store } from '@mui/icons-material';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { environment } from '../../../environments/environment';
 import { ActiveOverlay } from '../../_enums/current-overlay';
 import { StoreAction } from '../../_enums/store-action';
 import { ThemeMode } from '../../_enums/theme-mode';
 import { Settings } from '../../_interfaces/settings.model';
-import { RootState } from '../store';
 /**
  * Payload for setting the current theme mode
  */
@@ -27,6 +25,20 @@ export type setActiveOverlayReducerPayload = PayloadAction<
     StoreAction.SET_ACTIVE_OVERLAY
 >;
 
+/**
+ * Payload for setting active users id
+ */
+export type setSelectedUserIdReducerPayload = PayloadAction<
+    number | null,
+    StoreAction.SET_USER_ID
+>;
+
+type settingsReducerTypes =
+    | setThemeModeReducerPayload
+    | setPathReducerPayload
+    | setActiveOverlayReducerPayload
+    | setSelectedUserIdReducerPayload;
+
 export type settingsReducerPayload<T = unknown> =
     T extends StoreAction.SET_THEME_MODE
         ? setThemeModeReducerPayload
@@ -34,6 +46,8 @@ export type settingsReducerPayload<T = unknown> =
         ? setPathReducerPayload
         : T extends StoreAction.SET_ACTIVE_OVERLAY
         ? setActiveOverlayReducerPayload
+        : T extends StoreAction.SET_USER_ID
+        ? setSelectedUserIdReducerPayload
         : PayloadAction<unknown, StoreAction>;
 
 const DEFAULT_STATE: Settings = {
@@ -54,10 +68,7 @@ const DEFAULT_STATE: Settings = {
  */
 export function settingsReducer(
     state = DEFAULT_STATE,
-    action:
-        | setThemeModeReducerPayload
-        | setPathReducerPayload
-        | setActiveOverlayReducerPayload
+    action: settingsReducerTypes
 ): Settings {
     if (action.type === StoreAction.SET_THEME_MODE) {
         return { ...state, themeMode: action.payload };
@@ -65,6 +76,8 @@ export function settingsReducer(
         return { ...state, path: action.payload };
     } else if (action.type === StoreAction.SET_ACTIVE_OVERLAY) {
         return { ...state, activeOverlay: action.payload };
+    } else if (action.type === StoreAction.SET_USER_ID) {
+        return { ...state, selectedUserId: action.payload };
     }
     return state;
 }

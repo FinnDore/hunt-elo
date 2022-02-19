@@ -3,6 +3,7 @@ import { ParentSize } from '@visx/responsive';
 import { Text } from '@visx/text';
 import { useSelector } from 'react-redux';
 import { eloSelector } from '../../_store/_selectors/elo-store/elo.selector';
+import { selectedUserIdSelector } from '../../_store/_selectors/settings/selected-user-id.selector copy';
 import classes from './elo-display.module.scss';
 
 /**
@@ -10,9 +11,8 @@ import classes from './elo-display.module.scss';
  * @returns {object} the elo display component
  */
 export function EloDisplay() {
-    const currentUserId = 0;
-
-    const elo = useSelector(eloSelector(currentUserId));
+    const userId = useSelector(selectedUserIdSelector);
+    const elo = useSelector(eloSelector(userId));
 
     return (
         <div>

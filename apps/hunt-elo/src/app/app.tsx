@@ -5,11 +5,11 @@ import {
     IconButton,
     ThemeProvider,
 } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import classes from './app.module.scss';
 import EloDisplay from './features/elo-display/elo-display';
-import { Settings } from './features/settings/settings';
+import { SettingsOverlay } from './features/settings/settings-overlay';
 import TitleBar from './title-bar/title-bar';
 import { ActiveOverlay } from './_enums/current-overlay';
 import { setActiveOverlay } from './_store/_actions/settings/set-active-overlay.action';
@@ -44,7 +44,7 @@ export function App() {
             <TitleBar></TitleBar>
             {activeOverlay === ActiveOverlay.SETTINGS && (
                 <div className={classes['overlay']}>
-                    <Settings></Settings>
+                    <SettingsOverlay></SettingsOverlay>
                 </div>
             )}
             <div className={classes['container']} data-tauri-drag-region>
