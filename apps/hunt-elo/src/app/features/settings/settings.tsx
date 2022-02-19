@@ -6,9 +6,9 @@ import { environment } from '../../../environments/environment.prod';
 import { getEloAndId } from '../../_functions/get-elo-and-id';
 import { getPath } from '../../_functions/get-path';
 import { logElo } from '../../_functions/log-elo';
-import { appendEloById } from '../../_store/_actions/append-elo.action';
-import { setPath } from '../../_store/_actions/set-path.action';
-import { setUserNameById } from '../../_store/_actions/set-user-name.action';
+import { appendEloById } from '../../_store/_actions/elo-store/append-elo.action';
+import { setPath } from '../../_store/_actions/settings/set-path.action';
+import { setUserNameById } from '../../_store/_actions/elo-store/set-user-name.action';
 import { eloHistorySelector } from '../../_store/_selectors/elo-store/elo-history.selector';
 import { eloSelector } from '../../_store/_selectors/elo-store/elo.selector';
 import { pathSelector } from '../../_store/_selectors/settings/path.selector';
@@ -16,7 +16,7 @@ import classes from './settings.module.scss';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import SettingsIcon from '@mui/icons-material/settings';
 import { ActiveOverlay } from '../../_enums/current-overlay';
-import { setActiveOverlay } from '../../_store/_actions/set-active-overlay.action';
+import { setActiveOverlay } from '../../_store/_actions/settings/set-active-overlay.action';
 
 const DEFAULT_PATH = environment.production
     ? 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Hunt Showdown\\user\\profiles\\default\\attributes.xml'

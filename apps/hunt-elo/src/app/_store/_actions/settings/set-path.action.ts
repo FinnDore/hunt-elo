@@ -1,6 +1,6 @@
-import { StoreAction } from '../../_enums/store-action';
-import { GlobalStore } from '../store';
-import { settingsReducerPayload } from '../_reducers/settings.reducer';
+import { StoreAction } from '../../../_enums/store-action';
+import { GlobalStore } from '../../store';
+import { settingsReducerPayload } from '../../_reducers/settings.reducer';
 
 /**
  * Sets the current path

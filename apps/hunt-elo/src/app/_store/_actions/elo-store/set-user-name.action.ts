@@ -1,6 +1,6 @@
-import { StoreAction } from '../../_enums/store-action';
-import { GlobalStore } from '../store';
-import { eloStoreReducerPayload } from '../_reducers/elo-store.reducer';
+import { StoreAction } from '../../../_enums/store-action';
+import { GlobalStore } from '../../store';
+import { eloStoreReducerPayload } from '../../_reducers/elo-store.reducer';
 
 /**
  * Sets the users username by id

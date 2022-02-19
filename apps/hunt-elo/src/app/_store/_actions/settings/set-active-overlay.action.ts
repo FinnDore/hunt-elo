@@ -1,7 +1,7 @@
-import { ActiveOverlay } from '../../_enums/current-overlay';
-import { StoreAction } from '../../_enums/store-action';
-import { GlobalStore } from '../store';
-import { settingsReducerPayload } from '../_reducers/settings.reducer';
+import { ActiveOverlay } from '../../../_enums/current-overlay';
+import { StoreAction } from '../../../_enums/store-action';
+import { GlobalStore } from '../../store';
+import { settingsReducerPayload } from '../../_reducers/settings.reducer';
 
 /**
  * Opens the given overlay

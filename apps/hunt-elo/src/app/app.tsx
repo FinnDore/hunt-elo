@@ -12,7 +12,7 @@ import EloDisplay from './features/elo-display/elo-display';
 import { Settings } from './features/settings/settings';
 import TitleBar from './title-bar/title-bar';
 import { ActiveOverlay } from './_enums/current-overlay';
-import { setActiveOverlay } from './_store/_actions/set-active-overlay.action';
+import { setActiveOverlay } from './_store/_actions/settings/set-active-overlay.action';
 import { activeOverlaySelector } from './_store/_selectors/settings/active-overlay.selector';
 import { themeModeSelector } from './_store/_selectors/settings/theme-mode.selector';
 
