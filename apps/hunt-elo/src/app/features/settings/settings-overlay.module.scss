@@ -1,11 +1,25 @@
 .container {
-    height: 100%;
+    height: calc(100vh - 3rem);
+    width: 100%;
+
+    position: absolute;
+    top: 3rem;
+    z-index: 1;
+
     display: flex;
     flex-flow: column;
-    justify-content: center;
     align-items: center;
+    overflow: visible;
 
     & > * {
-        margin: 0.5rem !important;
+        margin: 0.5rem auto !important;
+    }
+
+    & > :first-child {
+        margin-top: auto !important;
+    }
+
+    & > :last-child {
+        margin-bottom: auto !important;
     }
 }

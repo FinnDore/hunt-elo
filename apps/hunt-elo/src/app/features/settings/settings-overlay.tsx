@@ -1,8 +1,8 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { Box } from '@mui/system';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { environment } from '../../../environments/environment.prod';
 import { ActiveOverlay } from '../../_enums/current-overlay';
 import { getAttrsByUserName } from '../../_functions/get-attrs-by-name';
 import { getPath } from '../../_functions/get-path';
@@ -10,15 +10,9 @@ import { setUserNameById } from '../../_store/_actions/elo-store/set-user-name.a
 import { setActiveOverlay } from '../../_store/_actions/settings/set-active-overlay.action';
 import { setPath } from '../../_store/_actions/settings/set-path.action';
 import { setSelectedUserId } from '../../_store/_actions/settings/set-selected-user-id.action';
-import { eloHistorySelector } from '../../_store/_selectors/elo-store/elo-history.selector';
-import { selectedUserNameSelector } from '../../_store/_selectors/elo-store/selected-user-name.selector copy';
+import { selectedUserNameSelector } from '../../_store/_selectors/elo-store/user-name.selector';
 import { pathSelector } from '../../_store/_selectors/settings/path.selector';
-import { selectedUserIdSelector } from '../../_store/_selectors/settings/selected-user-id.selector';
 import classes from './settings-overlay.module.scss';
-
-const DEFAULT_PATH = environment.production
-    ? 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Hunt Showdown\\user\\profiles\\default\\attributes.xml'
-    : '../../hunt-elo/src/assets/attributes.xml';
 
 /**
  * The settings component
@@ -31,7 +25,6 @@ export function SettingsOverlay() {
 
     const path = useSelector(pathSelector);
 
-    const userId = useSelector(selectedUserIdSelector);
     const userName = useSelector(selectedUserNameSelector);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -60,9 +53,11 @@ export function SettingsOverlay() {
         },
         []
     );
-
     return (
-        <div className={classes['container']}>
+        <Box
+            sx={{ bgcolor: 'background.default' }}
+            className={classes['container']}
+        >
             <TextField
                 className={classes['input']}
                 id="outlined-basic"
@@ -93,7 +88,7 @@ export function SettingsOverlay() {
             >
                 Close
             </Button>
-        </div>
+        </Box>
     );
 }
 

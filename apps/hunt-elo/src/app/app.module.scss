@@ -11,30 +11,24 @@ i
     width: 30%;
 }
 .container {
-    scroll-margin-top: 4rem;
-    width: calc(100vw - 4rem);
-    height: calc(100vh - 4rem);
-    max-height: calc(100vh - 4rem);
+    height: calc(100vh - 3rem);
+    max-height: calc(100vh - 3rem);
+    width: 100%;
     max-width: 1000px;
+
     margin: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     margin: auto;
+    overflow: auto;
 
     & > * {
         width: 100%;
+
+        margin: 0 auto;
+
         text-align: center;
     }
-}
-
-.overlay {
-    height: calc(100vh - 3rem);
-    width: 100%;
-
-    position: absolute;
-    top: 3rem;
-    z-index: 1;
 }
 
 .elo-display {

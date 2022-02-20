@@ -1,5 +1,5 @@
 /**
- * Take a elo history and logs the last change ( up, down, detected )
+ * Take a elo history and logs the last change ( up, down, detected)
  *
  * @param history the current elo history
  * @returns {void}
