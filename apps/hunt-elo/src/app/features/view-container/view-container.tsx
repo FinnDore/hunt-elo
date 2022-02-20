@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 import { ActiveOverlay } from '../../_enums/current-overlay';
 import { activeOverlaySelector } from '../../_store/_selectors/settings/active-overlay.selector';
 
-const END_SCALE = 1.25;
+const START_SCALE = 1.25;
+const END_SCALE = 0.85;
 const END_OPACITY = 0;
 const DURATION = 0.23;
 
@@ -31,7 +32,7 @@ export function ViewContainer(props: {
                 >
                     <motion.div
                         style={{
-                            scale: END_SCALE,
+                            scale: START_SCALE,
                             opacity: END_OPACITY,
                             position: 'absolute',
                         }}

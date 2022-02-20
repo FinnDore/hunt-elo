@@ -16,8 +16,6 @@ import EloChart from './elo-chart/elo-chart';
 export function Elo() {
     const userId = useSelector(selectedUserIdSelector);
 
-    const eloHistory = useSelector(eloHistorySelector(userId));
-
     return (
         <>
             <div className={classes['header']}>

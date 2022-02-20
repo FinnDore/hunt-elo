@@ -53,6 +53,7 @@ export function SettingsOverlay() {
         },
         []
     );
+
     return (
         <Box sx={{ bgcolor: 'background.default' }} className={classes['box']}>
             <TextField

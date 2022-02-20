@@ -43,7 +43,7 @@ export function EloDisplay() {
 
     useEffect(() => {
         window.addEventListener('focus', refreshElo);
-        const timer = setInterval(refreshElo, 3000);
+        const timer = setInterval(refreshElo, 500);
         return () => {
             clearInterval(timer);
             window.removeEventListener('focus', refreshElo);
