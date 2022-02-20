@@ -1,14 +1,11 @@
-import { path } from '@tauri-apps/api';
 import { GradientOrangeRed } from '@visx/gradient';
 import { ParentSize } from '@visx/responsive';
 import { Text } from '@visx/text';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getAttrsByUserId } from '../../_functions/get-attrs-by-id';
-import { getPath } from '../../_functions/get-path';
 import { logElo } from '../../_functions/log-elo';
 import { appendEloById } from '../../_store/_actions/elo-store/append-elo.action';
-import { setPath } from '../../_store/_actions/settings/set-path.action';
 import { eloHistorySelector } from '../../_store/_selectors/elo-store/elo-history.selector';
 import { eloSelector } from '../../_store/_selectors/elo-store/elo.selector';
 import { pathSelector } from '../../_store/_selectors/settings/path.selector';
@@ -29,7 +26,6 @@ export function EloDisplay() {
         if (!userId) {
             return;
         }
-        console.log('refresh elo');
 
         const userAttrs = await getAttrsByUserId(userId, path);
         if (userAttrs) {
