@@ -5,6 +5,7 @@ import {
     IconButton,
     ThemeProvider,
 } from '@mui/material';
+import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import classes from './app.module.scss';
@@ -56,6 +57,12 @@ export function App() {
                         <SettingsIcon fontSize="inherit" />
                     </IconButton>
                 </div>
+                <motion.div
+                    initial={{ color: '#d2fAd3df' }}
+                    animate={{ color: 'red' }}
+                >
+                    AAAA
+                </motion.div>
 
                 <div className={classes['elo-display']}>
                     <EloDisplay />
