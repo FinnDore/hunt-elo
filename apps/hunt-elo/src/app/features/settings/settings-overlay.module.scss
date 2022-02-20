@@ -1,15 +1,11 @@
-.container {
-    height: calc(100vh - 3rem);
+.box {
     width: 100%;
 
-    position: absolute;
-    top: 3rem;
-    z-index: 1;
-
+    height: 100%;
     display: flex;
     flex-flow: column;
     align-items: center;
-    overflow: visible;
+    overflow: auto;
 
     & > * {
         margin: 0.5rem auto !important;

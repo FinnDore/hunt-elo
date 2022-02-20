@@ -5,7 +5,8 @@ import {
     IconButton,
     ThemeProvider,
 } from '@mui/material';
-import { motion } from 'framer-motion';
+import bezier from 'bezier-easing';
+import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import classes from './app.module.scss';
@@ -46,38 +47,106 @@ export function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <TitleBar />
-            {activeOverlay === ActiveOverlay.SETTINGS && <SettingsOverlay />}
-            <div className={classes['container']} data-tauri-drag-region>
-                <div className={classes['header']}>
-                    <IconButton
-                        aria-label="settings"
-                        size="large"
-                        onClick={() => setActiveOverlay(ActiveOverlay.SETTINGS)}
+            <AnimatePresence>
+                {activeOverlay === ActiveOverlay.SETTINGS && (
+                    <MotionConfig
+                        transition={{
+                            duration: 0.2,
+                            // ease: bezier(0.66, 0.53, 0.67, 1.75),
+                            easings: 'ease-out',
+                        }}
                     >
-                        <SettingsIcon fontSize="inherit" />
-                    </IconButton>
-                </div>
-                <motion.div
-                    initial={{ color: '#d2fAd3df' }}
-                    animate={{ color: 'red' }}
-                >
-                    AAAA
-                </motion.div>
+                        <motion.div
+                            style={{
+                                scale: 1.25,
+                                opacity: 0,
+                                position: 'absolute',
+                            }}
+                            animate={{
+                                scale: 1,
+                                opacity: 1,
+                                position: 'absolute',
+                            }}
+                            exit={{
+                                scale: 1.25,
+                                opacity: 0,
+                                position: 'absolute',
+                            }}
+                            className={classes['container-settings']}
+                        >
+                            <SettingsOverlay />
+                        </motion.div>
+                    </MotionConfig>
+                )}
+            </AnimatePresence>
 
-                <div className={classes['elo-display']}>
-                    <EloDisplay />
-                </div>
+            <div className={classes['content']}>
+                <AnimatePresence>
+                    {activeOverlay !== ActiveOverlay.SETTINGS && (
+                        <MotionConfig
+                            transition={{
+                                duration: 0.22,
+                                // ease: bezier(0.66, 0.53, 0.67, 1.75),
+                                easings: 'ease-out',
+                            }}
+                        >
+                            <motion.div
+                                style={{
+                                    scale: 1.25,
+                                    opacity: 0,
+                                    position: 'absolute',
+                                }}
+                                animate={{
+                                    scale: 1,
+                                    opacity: 1,
+                                    position: 'absolute',
+                                }}
+                                exit={{
+                                    scale: 1.25,
+                                    opacity: 0,
+                                    position: 'absolute',
+                                }}
+                                className={classes['container']}
+                                data-tauri-drag-region
+                            >
+                                <div className={classes['header']}>
+                                    <IconButton
+                                        aria-label="settings"
+                                        size="large"
+                                        onClick={() =>
+                                            setActiveOverlay(
+                                                ActiveOverlay.SETTINGS
+                                            )
+                                        }
+                                    >
+                                        <SettingsIcon fontSize="inherit" />
+                                    </IconButton>
+                                </div>
 
-                {/* used to center the elo display vertically */}
-                <div className={`${classes['header']} ${classes['hidden']}`}>
-                    <IconButton
-                        aria-label="settings"
-                        size="large"
-                        onClick={() => setActiveOverlay(ActiveOverlay.SETTINGS)}
-                    >
-                        <SettingsIcon fontSize="inherit" />
-                    </IconButton>
-                </div>
+                                <div className={classes['elo-display']}>
+                                    <EloDisplay />
+                                </div>
+
+                                {/* used to center the elo display vertically */}
+                                <div
+                                    className={`${classes['header']} ${classes['hidden']}`}
+                                >
+                                    <IconButton
+                                        aria-label="settings"
+                                        size="large"
+                                        onClick={() =>
+                                            setActiveOverlay(
+                                                ActiveOverlay.SETTINGS
+                                            )
+                                        }
+                                    >
+                                        <SettingsIcon fontSize="inherit" />
+                                    </IconButton>
+                                </div>
+                            </motion.div>
+                        </MotionConfig>
+                    )}
+                </AnimatePresence>
             </div>
         </ThemeProvider>
     );

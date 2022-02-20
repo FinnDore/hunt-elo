@@ -54,10 +54,7 @@ export function SettingsOverlay() {
         []
     );
     return (
-        <Box
-            sx={{ bgcolor: 'background.default' }}
-            className={classes['container']}
-        >
+        <Box sx={{ bgcolor: 'background.default' }} className={classes['box']}>
             <TextField
                 className={classes['input']}
                 id="outlined-basic"

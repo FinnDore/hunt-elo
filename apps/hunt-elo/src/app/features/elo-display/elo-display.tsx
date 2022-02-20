@@ -29,6 +29,7 @@ export function EloDisplay() {
         if (!userId) {
             return;
         }
+        console.log('refresh elo');
 
         const userAttrs = await getAttrsByUserId(userId, path);
         if (userAttrs) {
