@@ -3,13 +3,13 @@ import { ParentSize } from '@visx/responsive';
 import { Text } from '@visx/text';
 import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getAttrsByUserId } from '../../_functions/get-attrs-by-id';
-import { logElo } from '../../_functions/log-elo';
-import { appendEloById } from '../../_store/_actions/elo-store/append-elo.action';
-import { eloHistorySelector } from '../../_store/_selectors/elo-store/elo-history.selector';
-import { eloSelector } from '../../_store/_selectors/elo-store/elo.selector';
-import { pathSelector } from '../../_store/_selectors/settings/path.selector';
-import { selectedUserIdSelector } from '../../_store/_selectors/settings/selected-user-id.selector';
+import { getAttrsByUserId } from '../../../_functions/get-attrs-by-id';
+import { logElo } from '../../../_functions/log-elo';
+import { appendEloById } from '../../../_store/_actions/elo-store/append-elo.action';
+import { eloHistorySelector } from '../../../_store/_selectors/elo-store/elo-history.selector';
+import { eloSelector } from '../../../_store/_selectors/elo-store/elo.selector';
+import { pathSelector } from '../../../_store/_selectors/settings/path.selector';
+import { selectedUserIdSelector } from '../../../_store/_selectors/settings/selected-user-id.selector';
 import classes from './elo-display.module.scss';
 
 /**

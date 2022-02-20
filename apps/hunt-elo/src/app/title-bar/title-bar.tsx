@@ -1,7 +1,8 @@
 import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';
-import { Button } from '@mui/material';
+import Box from '@mui/material/box';
+import Button from '@mui/material/button';
 import { appWindow } from '@tauri-apps/api/window';
 import { useMemo } from 'react';
 import classes from './title-bar.module.scss';
@@ -20,7 +21,11 @@ export function TitleBar() {
     );
 
     return (
-        <div className={classes['title-bar']} data-tauri-drag-region>
+        <Box
+            sx={{ bgcolor: 'background.paper' }}
+            className={classes['title-bar']}
+            data-tauri-drag-region
+        >
             <Button onClick={() => appWindow.minimize()}>
                 <MinimizeOutlinedIcon></MinimizeOutlinedIcon>
             </Button>
@@ -30,7 +35,7 @@ export function TitleBar() {
             <Button onClick={() => appWindow.close()}>
                 <ClearOutlinedIcon></ClearOutlinedIcon>
             </Button>
-        </div>
+        </Box>
     );
 }
 

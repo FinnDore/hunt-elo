@@ -8,7 +8,8 @@ import {
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import classes from './app.module.scss';
-import EloDisplay from './features/elo-display/elo-display';
+import Elo from './features/elo/elo';
+import EloDisplay from './features/elo/elo-display/elo-display';
 import { SettingsOverlay } from './features/settings/settings-overlay';
 import { ViewContainer } from './features/view-container/view-container';
 import TitleBar from './title-bar/title-bar';
@@ -48,44 +49,12 @@ export function App() {
         }),
         []
     );
+
     const EloDisplayProps = useMemo(
         () => ({
             overlayName: ActiveOverlay.NONE,
             className: classes['container'],
-            children: (
-                <>
-                    <div className={classes['header']}>
-                        <IconButton
-                            aria-label="settings"
-                            size="large"
-                            onClick={() =>
-                                setActiveOverlay(ActiveOverlay.SETTINGS)
-                            }
-                        >
-                            <SettingsIcon fontSize="inherit" />
-                        </IconButton>
-                    </div>
-
-                    <div className={classes['elo-display']}>
-                        <EloDisplay />
-                    </div>
-
-                    {/* used to center the elo display vertically */}
-                    <div
-                        className={`${classes['header']} ${classes['hidden']}`}
-                    >
-                        <IconButton
-                            aria-label="settings"
-                            size="large"
-                            onClick={() =>
-                                setActiveOverlay(ActiveOverlay.SETTINGS)
-                            }
-                        >
-                            <SettingsIcon fontSize="inherit" />
-                        </IconButton>
-                    </div>
-                </>
-            ),
+            children: <Elo />,
         }),
         []
     );
