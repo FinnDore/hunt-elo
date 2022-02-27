@@ -1,8 +1,11 @@
 <Attributes Version="37">
     <Attr name="MissionBagPlayer_0_1_blood_line_name" value="Finn" />
-    <Attr name="MissionBagPlayer_0_1_mmr" value="3153" />
+    <Attr name="MissionBagPlayer_0_1_mmr" value="34346" />
+    <Attr name="MissionBagPlayer_0_1_profileid" value="1"/>
     <Attr name="MissionBagPlayer_0_2_blood_line_name" value="Jack" />
     <Attr name="MissionBagPlayer_0_2_mmr" value="2853" />
+    <Attr name="MissionBagPlayer_0_2_profileid" value="2"/>
     <Attr name="MissionBagPlayer_0_3_blood_line_name" value="Josh" />
-    <Attr name="MissionBagPlayer_0_3_mmr" value="2653" />
+    <Attr name="MissionBagPlayer_0_3_mmr" value="1853" />
+    <Attr name="MissionBagPlayer_0_3_profileid" value="3"/>
 </Attributes>

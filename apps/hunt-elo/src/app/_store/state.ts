@@ -1,3 +1,4 @@
+import { EloStore } from '../_interfaces/elo-store.model';
 import { Settings } from '../_interfaces/settings.model';
 
 /**
@@ -5,20 +6,9 @@ import { Settings } from '../_interfaces/settings.model';
  */
 export interface State {
     /**
-     * {@property} The a collection of elo history's
+     * {@property}a collection of elo history's
      */
-    eloStore: {
-        [key: number]: {
-            /**
-             * {@property} the username for the user
-             */
-            name: string;
-            /**
-             * {@property} the users elo history
-             */
-            eloHistory: number[];
-        };
-    };
+    eloStore: EloStore;
     /**
      * {@property} the current tree map settings
      */

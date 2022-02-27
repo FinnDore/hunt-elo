@@ -3,49 +3,25 @@ import {
     createTheme,
     CssBaseline,
     IconButton,
-    TextField,
     ThemeProvider,
-    Tooltip,
 } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
-import classes from './app.module.scss';
-import TitleBar from './title-bar/title-bar';
-import { getElo } from './_functions/get-elo';
-import { getPath } from './_functions/get-path';
-import { Text } from '@visx/text';
-import { ParentSize } from '@visx/responsive';
-import { GradientOrangeRed } from '@visx/gradient';
-import { environment } from '../environments/environment';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { pathSelector } from './_store/_selectors/path.selector';
-import { themeModeSelector } from './_store/_selectors/theme-mode.selector';
-import { setPath } from './_store/_actions/set-path.action';
-
-const DEFAULT_PATH = environment.production
-    ? 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Hunt Showdown\\user\\profiles\\default\\attributes.xml'
-    : '../../hunt-elo/src/assets/attributes.xml';
+import classes from './app.module.scss';
+import EloDisplay from './features/elo-display/elo-display';
+import { SettingsOverlay } from './features/settings/settings-overlay';
+import { ViewContainer } from './features/view-container/view-container';
+import TitleBar from './title-bar/title-bar';
+import { ActiveOverlay } from './_enums/current-overlay';
+import { setActiveOverlay } from './_store/_actions/settings/set-active-overlay.action';
+import { themeModeSelector } from './_store/_selectors/settings/theme-mode.selector';
 
 /**
  * The app component
  * @returns {object} the app component
  */
 export function App() {
-    const [username, setUsername] = useState<string>('');
-    const [elo, setElo] = useState<number | null>(null);
-
-    const path = useSelector(pathSelector);
     const themeMode = useSelector(themeModeSelector);
-
-    useMemo(
-        async () => setElo(await getElo(username, path ?? DEFAULT_PATH)),
-        [username, path]
-    );
-
-    const updateElo = useMemo(
-        () => async () => setElo(await getElo(username, path ?? DEFAULT_PATH)),
-        [username, path]
-    );
-
     const theme = useMemo(
         () =>
             createTheme({
@@ -54,8 +30,8 @@ export function App() {
                     primary: {
                         main: '#face88',
                     },
-                    secondary: {
-                        main: '#00f2c4',
+                    background: {
+                        default: '#121212',
                     },
                     contrastThreshold: 3,
                     tonalOffset: 0.1,
@@ -64,76 +40,61 @@ export function App() {
         [themeMode]
     );
 
-    const setCurrentPath = useMemo(
-        () => async () => {
-            const path = (await getPath())?.[0];
-            if (path) {
-                setPath(path);
-            }
-        },
+    const settingsProps = useMemo(
+        () => ({
+            overlayName: ActiveOverlay.SETTINGS,
+            className: classes['container-settings'],
+            children: <SettingsOverlay />,
+        }),
         []
     );
+    const EloDisplayProps = useMemo(
+        () => ({
+            overlayName: ActiveOverlay.NONE,
+            className: classes['container'],
+            children: (
+                <>
+                    <div className={classes['header']}>
+                        <IconButton
+                            aria-label="settings"
+                            size="large"
+                            onClick={() =>
+                                setActiveOverlay(ActiveOverlay.SETTINGS)
+                            }
+                        >
+                            <SettingsIcon fontSize="inherit" />
+                        </IconButton>
+                    </div>
 
-    useEffect(() => {
-        window.addEventListener('focus', updateElo);
-        const timer = setInterval(updateElo, 3000);
+                    <div className={classes['elo-display']}>
+                        <EloDisplay />
+                    </div>
 
-        return () => {
-            clearInterval(timer);
-            window.removeEventListener('focus', updateElo);
-        };
-    }, [updateElo]);
-
+                    {/* used to center the elo display vertically */}
+                    <div
+                        className={`${classes['header']} ${classes['hidden']}`}
+                    >
+                        <IconButton
+                            aria-label="settings"
+                            size="large"
+                            onClick={() =>
+                                setActiveOverlay(ActiveOverlay.SETTINGS)
+                            }
+                        >
+                            <SettingsIcon fontSize="inherit" />
+                        </IconButton>
+                    </div>
+                </>
+            ),
+        }),
+        []
+    );
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <TitleBar></TitleBar>
-            <div className={classes['container']} data-tauri-drag-region>
-                <div className={classes['header']}>
-                    <TextField
-                        className={classes['input']}
-                        id="outlined-basic"
-                        label="username"
-                        onChange={e => {
-                            setUsername(e.target.value ?? '');
-                        }}
-                        variant="outlined"
-                        helperText="case sensitive"
-                    />
-                    <IconButton
-                        aria-label="settings"
-                        size="large"
-                        onClick={setCurrentPath}
-                    >
-                        <SettingsIcon fontSize="inherit" />
-                    </IconButton>
-                </div>
-
-                {elo !== null ? (
-                    <div className={classes['elo']}>
-                        <ParentSize>
-                            {({ width }) => (
-                                <svg
-                                    width={width}
-                                    className={classes['text-svg']}
-                                >
-                                    <GradientOrangeRed id="elo-gradient" />
-                                    <Text
-                                        verticalAnchor="start"
-                                        scaleToFit={true}
-                                        width={width * 0.95}
-                                        fill="url(#elo-gradient)"
-                                    >
-                                        {elo}
-                                    </Text>
-                                </svg>
-                            )}
-                        </ParentSize>
-                    </div>
-                ) : (
-                    <div>no user found</div>
-                )}
-            </div>
+            <TitleBar />
+            <ViewContainer {...settingsProps}></ViewContainer>
+            <ViewContainer {...EloDisplayProps}></ViewContainer>
         </ThemeProvider>
     );
 }
