@@ -1,6 +1,6 @@
 {
   "name": "@hunt-elo/tauri-client",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "scripts": {
     "tauri": "tauri"
   },

@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.4](https://github.com/FinnDore/hunt-elo/compare/v0.2.3...v0.2.4) (2022-02-27)
+
+
+
 ## [0.2.3](https://github.com/FinnDore/hunt-elo/compare/v0.2.2...v0.2.3) (2022-02-16)
 
 
