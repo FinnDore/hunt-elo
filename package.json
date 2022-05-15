@@ -14,7 +14,7 @@
         "@commitlint/config-nx-scopes": "16.2.1",
         "@emotion/react": "11.7.1",
         "@emotion/styled": "11.6.0",
-        "@fontsource/roboto": "4.5.3",
+        "@fontsource/roboto": "4.5.7",
         "@mui/icons-material": "5.4.2",
         "@mui/material": "5.4.1",
         "@reduxjs/toolkit": "1.7.2",
