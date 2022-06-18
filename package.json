@@ -44,7 +44,7 @@
         "@nrwl/web": "13.8.1",
         "@nrwl/workspace": "13.8.1",
         "@swc/cli": "0.1.55",
-        "@swc/core": "1.2.118",
+        "@swc/core": "1.2.204",
         "@swc/helpers": "0.2.14",
         "@swc/jest": "0.2.15",
         "@testing-library/react": "12.1.2",
